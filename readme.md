@@ -1,6 +1,5 @@
 # Physical Long-Term Monthly Streamflow Forecasting (PLTMSF) Model Procedure
 
-This model integrates the SWATPlus model and ARIMA model. Follow these steps:
 
 1. Calibrate the SWATPlus model using SWATPlusCUP. Obtain the optimal parameters (saved as Calibration.cal in the SWATPlusCUP project directory). Evaluate the calibration and validation performance.
 
