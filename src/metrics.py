@@ -2,6 +2,29 @@ import numpy as np
 import pandas as pd
 import math
 
+import numpy as np
+
+def TCS(y_true, y_pred):
+    """
+    Compute Temporal Consistency Score
+    args:
+        * `y_true`: the observed records
+        * `y_pred`: the predictions
+    """
+    y_true = np.asarray(y_true)
+    y_pred = np.asarray(y_pred)
+    
+    diff_true = np.diff(y_true)
+    diff_pred = np.diff(y_pred)
+    
+    product = diff_true * diff_pred
+    
+    score = np.sum(np.sign(product))
+    
+    return score / (len(y_true) - 1)
+
+    
+
 def NSE(y_true,y_pred):
     """
     Compute Nash-Sutcliffe efficiency
@@ -102,6 +125,16 @@ def PPTS(y_true,y_pred,gamma=5,norm=True):
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
 
+    y_true_max = np.max(y_true)
+    y_true_min = np.min(y_true)
+    y_pred_max = np.max(y_pred)
+    y_pred_min = np.min(y_pred)
+
+    max_val = np.max([y_true_max,y_pred_max])
+    min_val = np.min([y_true_min,y_pred_min])
+    
+    err_range = max_val - min_val
+
     # y_true
     r = pd.DataFrame(y_true,columns=['r'])
     # print('original time series:\n{}'.format(r))
@@ -118,15 +151,8 @@ def PPTS(y_true,y_pred,gamma=5,norm=True):
     rps_g=rps.iloc[:G]
     y_true = (rps_g['r']).values
     y_pred = (rps_g['p']).values
-    y_true_max = np.max(y_true)
-    y_true_min = np.min(y_true)
-    y_pred_max = np.max(y_pred)
-    y_pred_min = np.min(y_pred)
+    
 
-    max_val = np.max([y_true_max,y_pred_max])
-    min_val = np.min([y_true_min,y_pred_min])
-
-    err_range = max_val - min_val
     
     avg = np.mean(y_true)
     if norm:
@@ -153,6 +179,16 @@ def LPTS(y_true,y_pred,gamma=5,norm=True):
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
 
+    y_true_max = np.max(y_true)
+    y_true_min = np.min(y_true)
+    y_pred_max = np.max(y_pred)
+    y_pred_min = np.min(y_pred)
+
+    max_val = np.max([y_true_max,y_pred_max])
+    min_val = np.min([y_true_min,y_pred_min])
+
+    err_range = max_val - min_val
+
 
     # y_true
     r = pd.DataFrame(y_true,columns=['r'])
@@ -172,15 +208,7 @@ def LPTS(y_true,y_pred,gamma=5,norm=True):
     y_pred = (rps_g['p']).values
     avg = np.mean(y_true)
 
-    y_true_max = np.max(y_true)
-    y_true_min = np.min(y_true)
-    y_pred_max = np.max(y_pred)
-    y_pred_min = np.min(y_pred)
-
-    max_val = np.max([y_true_max,y_pred_max])
-    min_val = np.min([y_true_min,y_pred_min])
-
-    err_range = max_val - min_val
+    
     if norm:
         absv=np.abs((y_true-y_pred))/np.abs(err_range)
         sumabsv=np.sum(absv)

@@ -14,9 +14,6 @@ This model integrates the SWATPlus model and ARIMA model. Follow these steps:
 
 6. Run the SWATPlus model via SWATPlus Toolbox, adjusting the simulation period as needed. Export forecasting results to the result/SWATPlusPredUsingSimYearData directory (e.g., "Channel_3_Monthly_River-Flow_TNH_pred2015.csv").
 
-7. Develop an ARIMA model using BuildArimaModelTNH.ipynb to forecast the next 12 months' seasonal trend pattern. Use observed flow data from the forecast year. Store results in the result/ARIMAPredData directory (e.g., "seasonal_decompose_multiplicative_arima_pred_tnh_2015_2019.csv").
-
-8. Refine the SWATPlus monthly flow predictions using ARIMA model forecasts. The correction factor is calculated based on the sum of ARIMA predictions during the flood season (May to November for TNH station) with the sum of SWATPlus predictions for the same period.
 
 # Calibration, Validation, and Test Information
 
